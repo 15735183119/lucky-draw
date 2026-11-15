@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06110f">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="从 X 帖子的回复里公平抽奖。无需登录，名单只留在你的浏览器里。">
+  <meta property="og:title" content="咸鱼抽奖">
+  <meta property="og:description" content="薛定谔的咸鱼的现场抽奖器。一人一条，随机可导出核对。">
+  <meta property="og:url" content="https://15735183119.github.io/lucky-draw/">
+  <meta property="og:type" content="website">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https: http://localhost:8787 http://127.0.0.1:8787 http://localhost:4173 http://127.0.0.1:4173; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <title>咸鱼抽奖 · @JohnWangbc</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306110f'/%3E%3Cellipse cx='28' cy='34' rx='14' ry='9' fill='%236ef3c5'/%3E%3Cpath d='M42 34l14-9v18z' fill='%23ffc56b'/%3E%3Ccircle cx='22' cy='32' r='1.8' fill='%2306110f'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <a class="skip" href="#draw-btn">跳到开奖</a>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="page">
+    <header class="hero">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 72 72" class="mark-svg">
+            <rect x="3" y="3" width="66" height="66" rx="18" fill="#0c1c18" stroke="#6ef3c5" stroke-width="2" stroke-dasharray="5 4"/>
+            <ellipse cx="32" cy="38" rx="16" ry="10" fill="#6ef3c5"/>
+            <path d="M46 38l14-10v20z" fill="#ffc56b"/>
+            <circle cx="26" cy="36" r="2" fill="#06110f"/>
+            <path d="M22 42c5 3 10 3 16 0" fill="none" stroke="#06110f" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow">薛定谔的咸鱼 · 现场抽奖</p>
+          <h1>咸鱼抽奖</h1>
+        </div>
+      </div>
+      <p class="lede">盒子合上之前，每位回复者的概率都一样。从 X 的评论里抽出幸运儿。不用登录，名单不离开这台浏览器。</p>
+      <ul class="pills">
+        <li>一人一条</li>
+        <li>可导出核对</li>
+        <li>不追踪</li>
+      </ul>
+    </header>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="card" aria-labelledby="collect-title">
+          <div class="card-head">
+            <h2 id="collect-title">1. 收集参与者</h2>
+          </div>
+          <div class="seg" role="tablist" aria-label="名单来源">
+            <button type="button" class="seg-btn is-on" id="tab-import" role="tab" aria-selected="true" aria-controls="panel-import">导入</button>
+            <button type="button" class="seg-btn" id="tab-link" role="tab" aria-selected="false" aria-controls="panel-link">贴帖子链接</button>
+          </div>
+
+          <div id="panel-import" role="tabpanel">
+            <label class="field" for="paste">名单，一行一个</label>
+            <textarea id="paste" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="@alice&#10;bob&#10;https://x.com/carol&#10;dave 算我一个"></textarea>
+            <div class="row">
+              <button type="button" class="btn primary" id="add-paste">加入名单</button>
+              <label class="btn ghost file-btn">
+                上传 CSV / JSON
+                <input id="file" type="file" accept=".csv,.json,.txt,.tsv,text/csv,application/json,text/plain">
+              </label>
+              <button type="button" class="btn ghost" id="clear-all">清空名单</button>
+            </div>
+            <p id="import-msg" class="msg" role="status"></p>
+            <details class="help">
+              <summary>支持的格式</summary>
+              <div class="formats">
+                <p><strong>纯文本。</strong>一行一个。可以写 <code>@alice</code>、<code>bob</code>、<code>https://x.com/carol</code>。行尾的字会当成评论，例如 <code>dave 算我一个</code>。以 # 开头的行会忽略。</p>
+                <p><strong>CSV / TSV。</strong>可以整段粘贴，也可以上传。分隔符用逗号、制表符或分号。表头认这些列（有英文或中文都行）：</p>
+                <ul>
+                  <li>用户名：<code>username</code> <code>handle</code> <code>screen_name</code> <code>用户名</code> <code>账号</code></li>
+                  <li>可选昵称：<code>name</code> <code>昵称</code></li>
+                  <li>可选粉丝：<code>followers</code> <code>followers_count</code> <code>粉丝数</code></li>
+                  <li>可选评论：<code>text</code> <code>评论</code> <code>内容</code></li>
+                </ul>
+                <p>没有表头时，按「用户名, 昵称, 粉丝数, 评论」的顺序读。只有一列时，整列都是用户名。</p>
+                <p><strong>JSON。</strong>这几种都可以：</p>
+                <pre>["alice", "bob"]
+[{"username":"alice","name":"爱丽丝","followers":10,"text":"算我一个"}]
+{"replies":[{"username":"alice","followers":10,"text":"算我一个"}]}</pre>
+                <p>也认 X 接口的 <code>{"data":[...],"includes":{"users":[...]}}</code>。文件请用 UTF-8。用户名不区分大小写，同一个人只留一条。</p>
+              </div>
+            </details>
+          </div>
+
+          <div id="panel-link" role="tabpanel" hidden>
+            <label class="field" for="tweet-url">帖子链接</label>
+            <input id="tweet-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/JohnWangbc/status/2121740234060906755">
+            <label class="field" for="proxy-url">代理地址</label>
+            <input id="proxy-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://lucky-draw-proxy.你的名字.workers.dev">
+            <label class="field" for="draw-key">访问密钥（可选，不显示在屏幕上）</label>
+            <input id="draw-key" type="password" spellcheck="false" autocomplete="new-password" placeholder="只有 Worker 设置了 DRAW_KEY 才填">
+            <p class="hint">浏览器直接访问不了 X 的接口：有跨域限制，Token 也不能写进网页。这里只把帖子编号发给你自己部署的代理。没填代理，或者拉取失败，就改用「导入」，开奖不耽误。导入的名单不会上传。</p>
+            <label class="check"><input id="append-fetch" type="checkbox"> 追加到现有名单，而不是替换</label>
+            <div class="row">
+              <button type="button" class="btn primary" id="fetch-replies">拉取回复</button>
+            </div>
+            <p id="link-msg" class="msg" role="status"></p>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="filter-title">
+          <div class="card-head">
+            <h2 id="filter-title">2. 筛选</h2>
+          </div>
+          <label class="field" for="exclude">排除这些账号（可选）</label>
+          <textarea id="exclude" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off">JohnWangbc
+grok</textarea>
+          <label class="check" for="zero-followers"><input id="zero-followers" type="checkbox"> 去掉粉丝数为 0 的账号</label>
+          <p class="hint">没有粉丝数的条目会留下。纯用户名导入通常没有粉丝数，勾了也不会被清掉。</p>
+          <label class="field" for="keyword">评论里要包含（可选）</label>
+          <input id="keyword" type="text" maxlength="40" placeholder="例如：抽奖" autocomplete="off">
+          <p class="hint">没写评论的条目视为不包含。一个人有多条回复时，会优先留下含这段文字的那条。</p>
+          <h3 class="subhead">筛选后的名单</h3>
+          <div id="preview" class="preview"></div>
+          <p id="preview-more" class="hint"></p>
+        </section>
+      </div>
+
+      <aside class="card draw-card" aria-labelledby="draw-title">
+        <div class="card-head">
+          <h2 id="draw-title">3. 开抽</h2>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="stat-raw" data-testid="stat-raw">0</b><span>原始</span></div>
+          <div class="stat"><b id="stat-dedup" data-testid="stat-dedup">0</b><span>去重后</span></div>
+          <div class="stat stat-final"><b id="stat-final" data-testid="stat-final">0</b><span>筛选后</span></div>
+        </div>
+        <p id="stat-detail" class="hint"></p>
+        <label class="field" for="winner-count">中奖人数</label>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="减少中奖人数">−</button>
+          <input id="winner-count" type="number" min="1" max="50" value="1" inputmode="numeric">
+          <button type="button" id="plus" aria-label="增加中奖人数">+</button>
+        </div>
+        <p id="odds" class="odds">没有可抽取的人。</p>
+        <label class="field" for="source-url">来源帖（可选，写进结果文案）</label>
+        <input id="source-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/JohnWangbc/status/2121740234060906755">
+        <label class="check" for="skip-anim"><input id="skip-anim" type="checkbox"> 跳过滚动动画</label>
+        <button type="button" class="btn draw" id="draw-btn" data-testid="draw" disabled>开始抽奖</button>
+        <button type="button" class="btn ghost wide" id="export-btn" disabled>导出筛选后名单 CSV</button>
+        <p id="draw-msg" class="msg" role="status"></p>
+        <p class="fair">先用加密随机数抽好，再播放滚动动画。没有加权，抽中谁只看这一次抽样。刷新页面不会重抽。</p>
+      </aside>
+    </div>
+
+    <section id="result" class="card result" hidden data-testid="result"></section>
+
+    <footer class="site-foot">
+      <a href="https://x.com/JohnWangbc" target="_blank" rel="noopener noreferrer">by @JohnWangbc · 用 AI 搓的抽奖器</a>
+    </footer>
+  </div>
+
+  <div id="stage" class="stage" hidden>
+    <div id="stage-card" class="stage-card" role="dialog" aria-modal="true" aria-labelledby="stage-title" tabindex="-1">
+      <canvas id="confetti" aria-hidden="true"></canvas>
+      <p class="eyebrow" id="stage-kicker">正在开奖</p>
+      <h2 id="stage-title">正在滚动</h2>
+      <div id="reel-window" class="reel-window" aria-hidden="true">
+        <div id="reel-track" class="reel-track"></div>
+      </div>
+      <ol id="pinned" class="pinned"></ol>
+      <p id="live" class="sr-only" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script src="js/config.js?v=1"></script>
+  <script src="js/core.js?v=1"></script>
+  <script src="js/app.js?v=1"></script>
+</body>
+</html>

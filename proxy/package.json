@@ -1,0 +1,5 @@
+{
+  "name": "lucky-draw-proxy",
+  "private": true,
+  "type": "module"
+}

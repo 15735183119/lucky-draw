@@ -1,0 +1,13 @@
+name = "lucky-draw-proxy"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+# 这两个是公开配置，不是密钥。
+# Token 用 secret，不要写进这个文件：
+#   npx wrangler secret put X_BEARER_TOKEN
+#   npx wrangler secret put DRAW_KEY
+[vars]
+ALLOWED_ORIGINS = "*"
+X_API_BASE = "https://api.x.com"
+# 有 full-archive 权限才改成 /2/tweets/search/all
+X_SEARCH_PATH = "/2/tweets/search/recent"
