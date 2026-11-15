@@ -31,7 +31,7 @@ test("maps a search page and drops the root tweet", () => {
     ],
     includes: {
       users: [
-        { id: "1", username: "JohnWangbc", name: "薛定谔的咸鱼", public_metrics: { followers_count: 10 } },
+        { id: "1", username: "JohnWangbc", name: "AsynFish", public_metrics: { followers_count: 10 } },
         { id: "2", username: "alice", name: "爱丽丝", public_metrics: { followers_count: 0 } },
       ],
     },
@@ -109,7 +109,7 @@ test("blocks browser origins that are not on the allowlist", async () => {
     headers: { Origin: "https://evil.test" },
   }), {
     X_BEARER_TOKEN: TOKEN,
-    ALLOWED_ORIGINS: "https://15735183119.github.io",
+    ALLOWED_ORIGINS: "https://AsynFish.github.io",
   });
   assert.equal(res.status, 403);
   assert.equal(res.headers.get("access-control-allow-origin"), null);
@@ -118,9 +118,9 @@ test("blocks browser origins that are not on the allowlist", async () => {
 test("answers CORS preflight", async () => {
   const res = await worker.fetch(new Request("https://worker.test/?id=1", {
     method: "OPTIONS",
-    headers: { Origin: "https://15735183119.github.io", "Access-Control-Request-Headers": "X-Draw-Key" },
+    headers: { Origin: "https://AsynFish.github.io", "Access-Control-Request-Headers": "X-Draw-Key" },
   }), { ALLOWED_ORIGINS: "*" });
   assert.equal(res.status, 204);
-  assert.equal(res.headers.get("access-control-allow-origin"), "https://15735183119.github.io");
+  assert.equal(res.headers.get("access-control-allow-origin"), "https://AsynFish.github.io");
   assert.match(res.headers.get("access-control-allow-headers"), /X-Draw-Key/);
 });

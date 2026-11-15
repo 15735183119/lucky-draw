@@ -2,9 +2,9 @@
 
 从 X 帖子的回复里抽奖。页面是简体中文，不用登录，导入的名单只留在你自己的浏览器里。
 
-线上地址：<https://15735183119.github.io/lucky-draw/>
+线上地址：<https://AsynFish.github.io/lucky-draw/>
 
-给 [@JohnWangbc](https://x.com/JohnWangbc)（薛定谔的咸鱼）现场用。公平性写在页面上：先用 `crypto.getRandomValues` 抽出结果，滚动动画只是把已经抽中的人演出来。
+给 [@JohnWangbc](https://x.com/JohnWangbc)（AsynFish）现场用。公平性写在页面上：先用 `crypto.getRandomValues` 抽出结果，滚动动画只是把已经抽中的人演出来。
 
 ## 今晚最快怎么开奖
 
@@ -81,7 +81,7 @@ JSON：
 1. 把本分支的 PR 合并进 `main`。
 2. 打开仓库 **Settings → Pages → Build and deployment**。
 3. **Source 选 GitHub Actions**（不要选 Deploy from a branch）。
-4. 到 **Actions** 看 “Deploy GitHub Pages”。变绿之后打开 <https://15735183119.github.io/lucky-draw/> 。
+4. 到 **Actions** 看 “Deploy GitHub Pages”。变绿之后打开 <https://AsynFish.github.io/lucky-draw/> 。
 5. 如果提示 `github-pages` 环境要批准，点 **Approve and deploy**。
 6. 免费的 GitHub Pages 要求仓库是 **Public**。
 
@@ -142,7 +142,7 @@ npx wrangler deploy
 想限制只有自己的 Pages 能调用时，把 `proxy/wrangler.toml` 里的 `ALLOWED_ORIGINS` 改成：
 
 ```toml
-ALLOWED_ORIGINS = "https://15735183119.github.io"
+ALLOWED_ORIGINS = "https://AsynFish.github.io"
 ```
 
 改完要重新部署。默认 `*` 是为了少一次配置；配合「不要公开代理地址」，必要时再加 `DRAW_KEY`。
