@@ -76,7 +76,7 @@ test("dedupes, prefers the reply that matches the keyword, and applies filters",
   const raw = [
     { username: "Ann", name: "安", followers: 5, text: "路过" },
     { username: "@ann", name: "安", followers: 5, text: "我要抽奖" },
-    { username: "JohnWangbc", name: "薛定谔的咸鱼", followers: 100, text: "抽奖" },
+    { username: "JohnWangbc", name: "AsynFish", followers: 100, text: "抽奖" },
     { username: "zero", followers: 0, text: "抽奖" },
     { username: "ghost", followers: null, text: "抽奖" },
     { username: "quiet", followers: 3, text: "不相关" },
@@ -151,7 +151,7 @@ test("csv round-trips and the result text cites the draw", () => {
     excludeZeroFollowers: false,
     keyword: "",
     sourceUrl: "https://x.com/JohnWangbc/status/2121740234060906755",
-    publicUrl: "https://15735183119.github.io/lucky-draw/",
+    publicUrl: "https://AsynFish.github.io/lucky-draw/",
   });
   assert.match(text, /@li_ly\s+https:\/\/x\.com\/li_ly/);
   assert.match(text, /2026-11-15 20:00:00/);

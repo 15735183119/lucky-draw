@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const PUBLIC_URL = "https://15735183119.github.io/lucky-draw/";
+  const PUBLIC_URL = "https://AsynFish.github.io/lucky-draw/";
   const SETTINGS_KEY = "xianyu-draw-settings-v1";
   const SESSION_KEY = "xianyu-draw-session-v1";
   const MAX_PAGES = 20;
