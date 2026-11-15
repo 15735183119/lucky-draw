@@ -65,25 +65,25 @@ test("parses JSON lists and an X API payload", () => {
 });
 
 test("reads the status id from x.com and twitter.com urls", () => {
-  assert.equal(parseTweetId("https://x.com/JohnWangbc/status/2121740234060906755"), "2121740234060906755");
-  assert.equal(parseTweetId("https://twitter.com/JohnWangbc/status/2121740234060906755?s=20"), "2121740234060906755");
+  assert.equal(parseTweetId("https://x.com/AsynFish/status/2121740234060906755"), "2121740234060906755");
+  assert.equal(parseTweetId("https://twitter.com/AsynFish/status/2121740234060906755?s=20"), "2121740234060906755");
   assert.equal(parseTweetId("https://x.com/i/web/status/2121740234060906755"), "2121740234060906755");
   assert.equal(parseTweetId("2121740234060906755"), "2121740234060906755");
-  assert.equal(parseTweetId("https://x.com/JohnWangbc"), null);
+  assert.equal(parseTweetId("https://x.com/AsynFish"), null);
 });
 
 test("dedupes, prefers the reply that matches the keyword, and applies filters", () => {
   const raw = [
     { username: "Ann", name: "安", followers: 5, text: "路过" },
     { username: "@ann", name: "安", followers: 5, text: "我要抽奖" },
-    { username: "JohnWangbc", name: "AsynFish", followers: 100, text: "抽奖" },
+    { username: "AsynFish", name: "AsynFish", followers: 100, text: "抽奖" },
     { username: "zero", followers: 0, text: "抽奖" },
     { username: "ghost", followers: null, text: "抽奖" },
     { username: "quiet", followers: 3, text: "不相关" },
   ];
   const pool = preparePool(raw, {
     keyword: "抽奖",
-    excludeHandles: ["@johnwangbc", "grok"],
+    excludeHandles: ["@asynfish", "grok"],
     excludeZeroFollowers: true,
   });
   assert.equal(pool.rawCount, 6);
@@ -147,16 +147,16 @@ test("csv round-trips and the result text cites the draw", () => {
     rawCount: 4,
     dedupedCount: 3,
     eligibleCount: 2,
-    excludedHandles: parseExcludeList("JohnWangbc grok"),
+    excludedHandles: parseExcludeList("AsynFish grok"),
     excludeZeroFollowers: false,
     keyword: "",
-    sourceUrl: "https://x.com/JohnWangbc/status/2121740234060906755",
+    sourceUrl: "https://x.com/AsynFish/status/2121740234060906755",
     publicUrl: "https://AsynFish.github.io/lucky-draw/",
   });
   assert.match(text, /@li_ly\s+https:\/\/x\.com\/li_ly/);
   assert.match(text, /2026-11-15 20:00:00/);
   assert.match(text, /有效参与：2 人/);
-  assert.match(text, /@JohnWangbc/);
+  assert.match(text, /@AsynFish/);
   assert.equal(formatBeijing(new Date("2026-11-15T12:00:00Z")), "2026-11-15 20:00:00");
 });
 
@@ -165,8 +165,11 @@ test("the page is Chinese, credits the host, and does not embed a token", () => 
   const app = fs.readFileSync(path.join(__dirname, "..", "js", "app.js"), "utf8");
   const worker = fs.readFileSync(path.join(__dirname, "..", "proxy", "src", "index.js"), "utf8");
   assert.match(html, /lang="zh-CN"/);
-  assert.match(html, /by @JohnWangbc · 用 AI 搓的抽奖器/);
-  assert.match(html, /https:\/\/x\.com\/JohnWangbc/);
+  assert.match(html, /咸鱼抽奖 · @AsynFish/);
+  assert.match(html, />by @AsynFish</);
+  assert.match(html, /https:\/\/x\.com\/AsynFish/);
+  assert.match(app, /AsynFish\\ngrok/);
+  assert.doesNotMatch(html, /用 AI|by AI/i);
   assert.match(html, /js\/core\.js/);
   assert.doesNotMatch(html + app, /X_BEARER_TOKEN|api\.x\.com/);
   assert.match(worker, /X_BEARER_TOKEN/);

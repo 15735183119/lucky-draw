@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://AsynFish.github.io/lucky-draw/">
   <meta property="og:type" content="website">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https: http://localhost:8787 http://127.0.0.1:8787 http://localhost:4173 http://127.0.0.1:4173; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
-  <title>咸鱼抽奖 · @JohnWangbc</title>
+  <title>咸鱼抽奖 · @AsynFish</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306110f'/%3E%3Cellipse cx='28' cy='34' rx='14' ry='9' fill='%236ef3c5'/%3E%3Cpath d='M42 34l14-9v18z' fill='%23ffc56b'/%3E%3Ccircle cx='22' cy='32' r='1.8' fill='%2306110f'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css?v=1">
 </head>
@@ -90,7 +90,7 @@
 
           <div id="panel-link" role="tabpanel" hidden>
             <label class="field" for="tweet-url">帖子链接</label>
-            <input id="tweet-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/JohnWangbc/status/2121740234060906755">
+            <input id="tweet-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/AsynFish/status/2121740234060906755">
             <label class="field" for="proxy-url">代理地址</label>
             <input id="proxy-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://lucky-draw-proxy.你的名字.workers.dev">
             <label class="field" for="draw-key">访问密钥（可选，不显示在屏幕上）</label>
@@ -109,7 +109,7 @@
             <h2 id="filter-title">2. 筛选</h2>
           </div>
           <label class="field" for="exclude">排除这些账号（可选）</label>
-          <textarea id="exclude" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off">JohnWangbc
+          <textarea id="exclude" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off">AsynFish
 grok</textarea>
           <label class="check" for="zero-followers"><input id="zero-followers" type="checkbox"> 去掉粉丝数为 0 的账号</label>
           <p class="hint">没有粉丝数的条目会留下。纯用户名导入通常没有粉丝数，勾了也不会被清掉。</p>
@@ -140,7 +140,7 @@ grok</textarea>
         </div>
         <p id="odds" class="odds">没有可抽取的人。</p>
         <label class="field" for="source-url">来源帖（可选，写进结果文案）</label>
-        <input id="source-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/JohnWangbc/status/2121740234060906755">
+        <input id="source-url" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://x.com/AsynFish/status/2121740234060906755">
         <label class="check" for="skip-anim"><input id="skip-anim" type="checkbox"> 跳过滚动动画</label>
         <button type="button" class="btn draw" id="draw-btn" data-testid="draw" disabled>开始抽奖</button>
         <button type="button" class="btn ghost wide" id="export-btn" disabled>导出筛选后名单 CSV</button>
@@ -152,7 +152,7 @@ grok</textarea>
     <section id="result" class="card result" hidden data-testid="result"></section>
 
     <footer class="site-foot">
-      <a href="https://x.com/JohnWangbc" target="_blank" rel="noopener noreferrer">by @JohnWangbc · 用 AI 搓的抽奖器</a>
+      <a href="https://x.com/AsynFish" target="_blank" rel="noopener noreferrer">by @AsynFish</a>
     </footer>
   </div>
 
