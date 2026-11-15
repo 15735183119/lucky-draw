@@ -821,7 +821,7 @@
     if (!window.LuckyDraw) return;
     const cfg = window.LUCKY_DRAW_CONFIG || {};
     const saved = loadJSON(localStorage, SETTINGS_KEY) || {};
-    $("exclude").value = Object.prototype.hasOwnProperty.call(saved, "exclude") ? saved.exclude : "JohnWangbc\ngrok";
+    $("exclude").value = Object.prototype.hasOwnProperty.call(saved, "exclude") ? saved.exclude : "AsynFish\ngrok";
     $("keyword").value = saved.keyword || "";
     $("zero-followers").checked = Boolean(saved.zero);
     $("winner-count").value = saved.winners || "1";

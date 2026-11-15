@@ -4,7 +4,7 @@
 
 线上地址：<https://AsynFish.github.io/lucky-draw/>
 
-给 [@JohnWangbc](https://x.com/JohnWangbc)（AsynFish）现场用。公平性写在页面上：先用 `crypto.getRandomValues` 抽出结果，滚动动画只是把已经抽中的人演出来。
+给 [@AsynFish](https://x.com/AsynFish) 现场用。公平性写在页面上：先用 `crypto.getRandomValues` 抽出结果，滚动动画只是把已经抽中的人演出来。
 
 ## 今晚最快怎么开奖
 
@@ -12,7 +12,7 @@
 
 1. 打开上面的网址（仓库要先按下面「部署到 GitHub Pages」合并并打开 Pages）。
 2. 停在「导入」。把参与者贴进文本框，一行一个，点「加入名单」。或者上传 CSV / JSON。
-3. 「排除这些账号」里已经写了 `JohnWangbc` 和 `grok`，按需要改。
+3. 「排除这些账号」里已经写了 `AsynFish` 和 `grok`，按需要改。
 4. 右边看三个数：原始、去重后、筛选后。选出中奖人数，点「开始抽奖」。
 5. 动画结束后，复制结果文案发回帖子下面，再点「导出本轮参与名单」把这一轮的名单存下来。
 
@@ -20,7 +20,7 @@
 
 来源帖可以填在「来源帖」里，会写进结果文案。今晚这场是：
 
-`https://x.com/JohnWangbc/status/2121740234060906755`
+`https://x.com/AsynFish/status/2121740234060906755`
 
 ## 页面上有什么
 

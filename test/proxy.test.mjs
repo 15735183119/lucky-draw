@@ -31,7 +31,7 @@ test("maps a search page and drops the root tweet", () => {
     ],
     includes: {
       users: [
-        { id: "1", username: "JohnWangbc", name: "AsynFish", public_metrics: { followers_count: 10 } },
+        { id: "1", username: "AsynFish", name: "AsynFish", public_metrics: { followers_count: 10 } },
         { id: "2", username: "alice", name: "爱丽丝", public_metrics: { followers_count: 0 } },
       ],
     },
